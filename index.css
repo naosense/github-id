@@ -25,7 +25,7 @@
 img {
     position: absolute;
     top: 20px;
-    right: 50px;
+    right: 60px;
     z-index: 0;
     animation-delay: 0.5s;
 }
@@ -33,9 +33,9 @@ img {
 #language {
     position: absolute;
     right: 10px;
-    top: 150px;
-    width: 230px;
-    height: 230px;
+    top: 130px;
+    width: 250px;
+    height: 250px;
 }
 
 #repo {
@@ -53,8 +53,6 @@ img {
 
 h1 {
     color: #111;
-    margin-bottom: 0;
-    padding-bottom: 0;
 }
 
 p {

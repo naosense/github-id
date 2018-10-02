@@ -32,6 +32,10 @@ $(document).ready(function () {
             async: true,
             success: function (data, status, xhr) {
                 callback(data, xhr);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                callback({}, xhr)
             }
         });
     };
@@ -111,14 +115,14 @@ $(document).ready(function () {
                 indicator: indicator
             },
             series: [{
-                name: 'Activity',
+                name: 'Program language',
                 type: 'radar',
                 symbolSize: 0,
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
                 data: [
                     {
                         value: data,
-                        name: 'Activity'
+                        name: 'Program language'
                     }
                 ],
                 color: 'rgba(40,167,69,1.0)'
@@ -237,14 +241,17 @@ $(document).ready(function () {
                         let load_repo_count = 0;
                         repos_no_io.forEach(function (r) {
                             let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[1] + '/languages' + '?access_token=' + select_token();
-                            invoke_github_api(language_url, function (language_data) {
-                                Object.keys(language_data).forEach(function (k, i) {
-                                    if (language.hasOwnProperty(k)) {
-                                        language[k] += language_data[k];
-                                    } else {
-                                        language[k] = language_data[k];
-                                    }
-                                });
+                            invoke_github_api(language_url, function (language_data, xhr) {
+                                if (xhr.status === 200) {
+                                    Object.keys(language_data).forEach(function (k, i) {
+                                        if (language.hasOwnProperty(k)) {
+                                            language[k] += language_data[k];
+                                        } else {
+                                            language[k] = language_data[k];
+                                        }
+                                    });
+                                }
+
                                 load_repo_count++;
 
                                 progress_bar.css('width', (50 + 50 / repos_no_io.length * load_repo_count) + '%');
