@@ -115,14 +115,14 @@ $(document).ready(function () {
                 indicator: indicator
             },
             series: [{
-                name: 'Program language',
+                name: 'Program language bytes',
                 type: 'radar',
                 symbolSize: 0,
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
                 data: [
                     {
                         value: data,
-                        name: 'Program language'
+                        name: 'Program language bytes'
                     }
                 ],
                 color: 'rgba(40,167,69,1.0)'
@@ -212,8 +212,8 @@ $(document).ready(function () {
             let page_count = Math.ceil(repo_count / page_size);
             let repos = [];
             for (let page = 1; page <= page_count; page++) {
-                let repo_url = 'https://api.github.com/users/' + user_id + '/repos?sort=created&per_page=' + page_size + '&page=' + page
-                    + '&access_token=' + select_token();
+                let repo_url = 'https://api.github.com/users/' + user_id + '/repos?sort=created&per_page='
+                    + page_size + '&page=' + page + '&access_token=' + select_token();
 
                 invoke_github_api(repo_url, function (repo_data) {
                     repos = repos.concat(repo_data.map(function (e) {
@@ -240,7 +240,8 @@ $(document).ready(function () {
 
                         let load_repo_count = 0;
                         repos_no_io.forEach(function (r) {
-                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[1] + '/languages' + '?access_token=' + select_token();
+                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[1] + '/languages'
+                                + '?access_token=' + select_token();
                             invoke_github_api(language_url, function (language_data, xhr) {
                                 if (xhr.status === 200) {
                                     Object.keys(language_data).forEach(function (k, i) {
