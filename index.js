@@ -232,16 +232,14 @@ $(document).ready(function () {
                             return [e[1], e[0]]
                         }).reverse());
 
+                        let repos_no_io = repos.filter(function (r) {
+                            return r[0].indexOf(user_id + '.github.io') === -1;
+                        });
+
                         let language = {};
                         let load_repo_count = 0;
-                        let repo_count_no_io = repo_count;
-                        for (let i = 0; i < repos.length; i++) {
-                            let r = repos[i];
-
-                            if (r[0].indexOf(user_id + '.github.io') > -1) {
-                                repo_count_no_io--;
-                                continue;
-                            }
+                        for (let i = 0; i < repos_no_io.length; i++) {
+                            let r = repos_no_io[i];
 
                             let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[0] + '/languages'
                                 + '?access_token=' + select_token();
@@ -252,7 +250,7 @@ $(document).ready(function () {
                                         total_codes += language_data[k];
                                     });
                                     Object.keys(language_data).forEach(function (k, i) {
-                                        let percent = language_data[k] / (total_codes * repo_count);
+                                        let percent = language_data[k] / (total_codes * repos_no_io.length);
                                         if (language.hasOwnProperty(k)) {
                                             language[k] += percent;
                                         } else {
@@ -262,9 +260,9 @@ $(document).ready(function () {
                                 }
 
                                 load_repo_count++;
-                                progress_bar.css('width', (50 + 50 / repo_count_no_io * load_repo_count) + '%');
+                                progress_bar.css('width', (50 + 50 / repos_no_io.length * load_repo_count) + '%');
 
-                                if (load_repo_count === repo_count_no_io) {
+                                if (load_repo_count === repos_no_io.length) {
 
                                     let language_array = object_to_array(language);
                                     language_array.sort(function (l1, l2) {
