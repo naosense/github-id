@@ -217,30 +217,32 @@ $(document).ready(function () {
 
                 invoke_github_api(repo_url, function (repo_data) {
                     repos = repos.concat(repo_data.map(function (e) {
-                        return [e['stargazers_count'], e['name']];
+                        return [e['name'], e['stargazers_count']];
                     }));
 
                     progress_bar.css('width', (10 + 40 / repo_count * repos.length) + '%');
 
                     if (repos.length === repo_count) {
-                        display_activity(repos.map(function (e) {
-                            return [e[1], e[0]];
-                        }));
+                        display_activity(repos);
                         repos.sort(function (r1, r2) {
-                            return r2[0] - r1[0];
+                            return r2[1] - r1[1];
                         });
 
-                        display_repo(repos.slice(0, 3).reverse());
+                        display_repo(repos.slice(0, 3).map(function (e) {
+                            return [e[1], e[0]]
+                        }).reverse());
 
                         let language = {};
-
-                        let repos_no_io = repos.filter(function (r) {
-                            return r[1].indexOf(user_id + '.github.io') === -1;
-                        });
-
                         let load_repo_count = 0;
-                        repos_no_io.forEach(function (r) {
-                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[1] + '/languages'
+                        for (let i = 0; i < repos.length; i++) {
+                            let r = repos[i];
+
+                            if (r[0].indexOf(user_id + '.github.io') > -1) {
+                                repo_count--;
+                                continue;
+                            }
+
+                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[0] + '/languages'
                                 + '?access_token=' + select_token();
                             invoke_github_api(language_url, function (language_data, xhr) {
                                 if (xhr.status === 200) {
@@ -254,13 +256,11 @@ $(document).ready(function () {
                                 }
 
                                 load_repo_count++;
+                                progress_bar.css('width', (50 + 50 / repo_count * load_repo_count) + '%');
 
-                                progress_bar.css('width', (50 + 50 / repos_no_io.length * load_repo_count) + '%');
-
-                                if (load_repo_count === repos_no_io.length) {
+                                if (load_repo_count === repo_count) {
 
                                     let language_array = object_to_array(language);
-
                                     language_array.sort(function (l1, l2) {
                                         return l2[1] - l1[1];
                                     });
@@ -271,14 +271,13 @@ $(document).ready(function () {
                                         indicator.push({'name': l[0], 'max': language_array[0][1]});
                                         l_data.push(l[1]);
                                     });
-
                                     display_language('', indicator, l_data);
 
                                     progress_bar.css('background-color', '#000');
                                 }
-                            });
 
-                        });
+                            })
+                        }
                     }
                 });
             }
