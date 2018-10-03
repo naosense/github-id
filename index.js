@@ -252,11 +252,11 @@ $(document).ready(function () {
                                         total_codes += language_data[k];
                                     });
                                     Object.keys(language_data).forEach(function (k, i) {
-                                        let ratio = language_data[k] / (total_codes * repo_count);
+                                        let percent = language_data[k] / (total_codes * repo_count);
                                         if (language.hasOwnProperty(k)) {
-                                            language[k] += ratio;
+                                            language[k] += percent;
                                         } else {
-                                            language[k] = ratio;
+                                            language[k] = percent;
                                         }
                                     });
                                 }
