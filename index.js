@@ -115,14 +115,14 @@ $(document).ready(function () {
                 indicator: indicator
             },
             series: [{
-                name: 'Program language bytes',
+                name: 'Percentage of languages',
                 type: 'radar',
                 symbolSize: 0,
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
                 data: [
                     {
                         value: data,
-                        name: 'Program language bytes'
+                        name: 'Percentage of languages'
                     }
                 ],
                 color: 'rgba(40,167,69,1.0)'
@@ -234,11 +234,12 @@ $(document).ready(function () {
 
                         let language = {};
                         let load_repo_count = 0;
+                        let repo_count_no_io = repo_count;
                         for (let i = 0; i < repos.length; i++) {
                             let r = repos[i];
 
                             if (r[0].indexOf(user_id + '.github.io') > -1) {
-                                repo_count--;
+                                repo_count_no_io--;
                                 continue;
                             }
 
@@ -246,19 +247,24 @@ $(document).ready(function () {
                                 + '?access_token=' + select_token();
                             invoke_github_api(language_url, function (language_data, xhr) {
                                 if (xhr.status === 200) {
+                                    let total_codes = 0;
                                     Object.keys(language_data).forEach(function (k, i) {
+                                        total_codes += language_data[k];
+                                    });
+                                    Object.keys(language_data).forEach(function (k, i) {
+                                        let ratio = language_data[k] / (total_codes * repo_count);
                                         if (language.hasOwnProperty(k)) {
-                                            language[k] += language_data[k];
+                                            language[k] += ratio;
                                         } else {
-                                            language[k] = language_data[k];
+                                            language[k] = ratio;
                                         }
                                     });
                                 }
 
                                 load_repo_count++;
-                                progress_bar.css('width', (50 + 50 / repo_count * load_repo_count) + '%');
+                                progress_bar.css('width', (50 + 50 / repo_count_no_io * load_repo_count) + '%');
 
-                                if (load_repo_count === repo_count) {
+                                if (load_repo_count === repo_count_no_io) {
 
                                     let language_array = object_to_array(language);
                                     language_array.sort(function (l1, l2) {
