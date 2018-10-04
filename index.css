@@ -3,11 +3,14 @@
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 }
 
+body {
+    background: #fff !important;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #1b1b1b;
     width: 100%;
     height: 100vh;
 }

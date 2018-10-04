@@ -277,7 +277,7 @@ $(document).ready(function () {
                                     });
                                     display_language('', indicator, l_data);
 
-                                    progress_bar.css('background-color', '#000');
+                                    progress_bar.css('background-color', '#fff');
                                 }
 
                             })
