@@ -294,7 +294,7 @@ $(document).ready(function () {
     render_chart(q);
 
     $('#capture').click(function () {
-        domtoimage.toPng(document.getElementById('outer'), {quality: 1.00})
+        domtoimage.toPng(document.getElementById('outer'))
             .then(function (dataUrl) {
                 let link = document.createElement('a');
                 link.download = 'github-id_' + q + '.png';

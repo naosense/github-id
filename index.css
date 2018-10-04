@@ -22,7 +22,7 @@
     align-items: center;
     border: 1px solid #aaa;
     border-radius: 7px;
-    box-shadow: 3px 3px 3px #888;
+    box-shadow: 1px 1px 2px #888 inset;
 }
 
 img {
