@@ -1,6 +1,6 @@
 ## A simple and beautiful github ID card | github-id
 
-Want one github ID card? Visit `https://pingao777.github.io/github-id/?q={your-github-id}` to get one, then you can paste it into your resume so that employers know you better, or paste it on your website to give others a general idea of your github.
+Want one github ID card? Now visit `https://pingao777.github.io/github-id/?q={your-github-id}` to get one, then you can paste it into your resume so that employers know you better, or paste it on your website to give others a general idea of your github.
 
 E.g. for the famous r programmer [hadley](https://pingao777.github.io/github-id/?q=hadley), the card looks like
 
