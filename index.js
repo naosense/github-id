@@ -199,7 +199,9 @@ $(document).ready(function () {
     let render_chart = function (user_id) {
         let user_url = 'https://api.github.com/users/' + user_id + '?access_token=' + select_token();
         invoke_github_api(user_url, function (user_data) {
-            $('#user_id').html(user_id);
+            let email = user_data['email'];
+            let email_html = is_empty(email) ? '' : '<span style="font-size: 12px; color: #999; letter-spacing: 0.01em">&nbsp;' + email + '</span>';
+            $('#user_id').html(user_id + email_html);
             $('#avatar').attr('src', user_data['avatar_url']);
             $('#following').html('Following: ' + simple_number(user_data['following'], 1));
             $('#follower').html('Follower: ' + simple_number(user_data['followers'], 1));
