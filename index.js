@@ -59,7 +59,12 @@ $(document).ready(function () {
         if (is_empty((email))) {
             return '';
         } else if (user_id.length * 3 + email.length > 55) {
-            return email.substring(0, 55 - user_id.length * 3) + '...';
+            let end = 55 - user_id.length * 3;
+            if (end < 1) {
+                return '...';
+            } else {
+                return email.substring(0, end) + '...';
+            }
         } else {
             return email;
         }
