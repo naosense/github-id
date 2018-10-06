@@ -224,7 +224,7 @@ $(document).ready(function () {
             let page_count = Math.ceil(repo_count / page_size);
             let repos = [];
             for (let page = 1; page <= page_count; page++) {
-                let repo_url = 'https://api.github.com/users/' + user_id + '/repos?sort=created&per_page='
+                let repo_url = 'https://api.github.com/users/' + user_id + '/repos?sort=created&direction=asc&per_page='
                     + page_size + '&page=' + page + '&access_token=' + select_token();
 
                 invoke_github_api(repo_url, function (repo_data) {
