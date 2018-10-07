@@ -127,6 +127,7 @@ $(document).ready(function () {
             tooltip: {},
             radar: {
                 radius: '40%',
+                nameGap: 10,
                 indicator: indicator
             },
             series: [{
