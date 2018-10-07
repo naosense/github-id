@@ -28,10 +28,11 @@ body {
     box-shadow: 1px 1px 2px #888 inset;
 }
 
-img {
+#avatar {
     position: absolute;
     top: 20px;
     right: 60px;
+    width: 150px;
     z-index: 0;
     animation-delay: 0.5s;
 }
@@ -56,8 +57,9 @@ img {
     z-index: 3
 }
 
-h1 {
+#user_id {
     color: #111;
+    margin-bottom: 5px;
 }
 
 p {
