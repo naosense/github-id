@@ -225,6 +225,11 @@ $(document).ready(function () {
             progress_bar.css('width', '10%');
 
             let repo_count = user_data['public_repos'];
+            if (repo_count === 0) {
+                progress_bar.css('width', '100%');
+                progress_bar.css('background-color', '#fff');
+                return;
+            }
             let page_size = 100;
             let page_count = Math.ceil(repo_count / page_size);
             let repos = [];
@@ -292,7 +297,10 @@ $(document).ready(function () {
                                         indicator.push({'name': l[0], 'max': language_array[0][1]});
                                         l_data.push(l[1]);
                                     });
-                                    display_language('', indicator, l_data);
+
+                                    if (indicator.length > 0 && l_data.length > 0) {
+                                        display_language('', indicator, l_data);
+                                    }
 
                                     progress_bar.css('background-color', '#fff');
                                 }
