@@ -88,15 +88,15 @@ $(document).ready(function () {
         return language_array;
     };
 
-    let display_activity = function (data) {
-        let myChart = echarts.init(document.getElementById('activity'));
+    let display_rank = function (data) {
+        let myChart = echarts.init(document.getElementById('rank'));
 
         let option = {
             grid: {
                 top: 0,
                 bottom: 0,
-                left: -20,
-                right: -20
+                left: -16,
+                right: -16
             },
             xAxis: {
                 type: 'category',
@@ -240,7 +240,7 @@ $(document).ready(function () {
                     progress_bar.css('width', (10 + 40 / repo_count * repos.length) + '%');
 
                     if (repos.length === repo_count) {
-                        display_activity(repos);
+                        display_rank(repos);
                         repos.sort(function (r1, r2) {
                             return r2[1] - r1[1];
                         });
