@@ -65,8 +65,7 @@ $(document).ready(function () {
                             type: 'get',
                             async: true,
                             success: function (data, status, xhr) {
-                                alert('Please come back at ' + datetime_to_datetime_str(new Date(data['resources']['core']['reset'] * 1000))
-                                    + ', go and have a cup of coffee!');
+                                alert('Rate limit exceeded, come back at ' + datetime_to_datetime_str(new Date(data['resources']['core']['reset'] * 1000)));
                             },
                             error: function (xhr, status, error) {
                                 console.error(xhr.responseText);
@@ -158,30 +157,38 @@ $(document).ready(function () {
         myChart.setOption(option);
     };
 
-    let display_language = function (q, indicator, data) {
+    let display_language = function (q, data) {
         let myChart = echarts.init(document.getElementById('language'));
         let option = {
-            backgroundColor: 'rgba(0,0,0,0.0)',
-            tooltip: {},
-            radar: {
-                radius: '40%',
-                nameGap: 10,
-                indicator: indicator
+            tooltip: {
+                trigger: 'item',
             },
-            series: [{
-                name: 'Percentage of languages',
-                type: 'radar',
-                symbolSize: 0,
-                itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                data: [
-                    {
-                        value: data,
-                        name: 'Percentage of languages'
-                    }
-                ],
-                color: 'rgba(40,167,69,1.0)'
-
-            }]
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                itemGap:2,
+                itemWidth: 15,
+                itemHeight: 10,
+                y: 'center',
+                textStyle: {
+                    fontSize: 10,
+                    color: '#aaa'
+                }
+            },
+            color: ['#e34c26', '#b07219', '#563d7c', '#29a745', '#f1e05a', '#005cc5'],
+            series: [
+                {
+                    name: 'Language Percent',
+                    type: 'pie',
+                    radius: ['27%', '40%'],
+                    label: {
+                        normal: {
+                            show: false,
+                        }
+                    },
+                    data: data
+                }
+            ]
         };
 
         myChart.setOption(option);
@@ -330,15 +337,13 @@ $(document).ready(function () {
                                         return l2[1] - l1[1];
                                     });
 
-                                    let indicator = [];
-                                    let l_data = [];
+                                    let lang_percent = [];
                                     language_array.slice(0, 6).forEach(function (l) {
-                                        indicator.push({'name': l[0], 'max': language_array[0][1]});
-                                        l_data.push(l[1]);
+                                        lang_percent.push({'name':l[0].length > 10 ? l[0].substring(0, 7) + '...':l[0], 'value':l[1]})
                                     });
 
-                                    if (indicator.length > 0 && l_data.length > 0) {
-                                        display_language('', indicator, l_data);
+                                    if (lang_percent.length > 0) {
+                                        display_language('', lang_percent);
                                     }
 
                                     progress_bar.css('background-color', '#fff');
