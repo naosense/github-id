@@ -5,7 +5,7 @@ $(document).ready(function () {
             return {};
         }
         let query = {};
-        query_string = query_string.charAt(0) === '?' ? query_string.substring(1) : query_string;
+        query_string = query_string.substring(query_string.indexOf('?') + 1);
         console.log(query_string);
         let query_array = query_string.split('&');
         query_array.forEach(function (q) {
@@ -19,6 +19,19 @@ $(document).ready(function () {
 
     let is_empty = function (s) {
         return s === null || s === undefined || s === '';
+    };
+
+    let datetime_to_datetime_str = function (datetime) {
+        let year = datetime.getFullYear();
+        let month = left_padding_zero((datetime.getMonth() + 1));
+        let day = left_padding_zero(datetime.getDate());
+        let hour = left_padding_zero(datetime.getHours());
+        let min = left_padding_zero(datetime.getMinutes());
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + min;
+    };
+
+    let left_padding_zero = function (int) {
+        return int < 10 ? '0' + int : int;
     };
 
     let invoke_github_api = function (url, callback) {
@@ -37,7 +50,29 @@ $(document).ready(function () {
                 console.error(xhr.responseText);
                 callback({}, xhr);
                 if (xhr.status === 403) {
-                    alert('Please wait for a while, printer is too hot')
+                    let query = parse_query(url);
+                    console.log('qq', query);
+                    let access_token = query['access_token'];
+                    if (is_empty(access_token)) {
+                        alert('Please wait for a while, printer is too hot');
+                    } else {
+                        $.ajax({
+                            headers: {
+                                Accept: 'application/vnd.github.v3.star+json; charset=utf-8'
+                            },
+                            url: 'https://api.github.com/rate_limit?access_token=' + access_token,
+                            dataType: 'json',
+                            type: 'get',
+                            async: true,
+                            success: function (data, status, xhr) {
+                                alert('Please come back at ' + datetime_to_datetime_str(new Date(data['resources']['core']['reset'] * 1000))
+                                    + ', go and have a cup of coffee!');
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
                 }
             }
         });
