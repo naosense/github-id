@@ -46,11 +46,9 @@ $(document).ready(function () {
 
     let select_token = function () {
         const access_tokens = [
-            '4c61c7e58785bb8b2789224381b2e1331083ffa7',
-            'a95aaa5a06cf5aa871ccc2f670371cfcb556cbd8',
-            '46dcf5dead1cb95385eab0ebab674e3dd3601dcc',
-            '6226fb196321a8a1b685b735e7208b909e12ef48',
-            '76183e52d0b0b1e9265088be5197df9f1a14454e'];
+            'fedf3ab292e335902777f9edfba4da45d4228258',
+            '25e865e3168113cc1481e5c06ac32a0878da4aba',
+            'ca7d6d4a4a6d7f044f75041f436e7a0429b3df06'];
 
         return access_tokens[random_int(0, access_tokens.length)];
     };
