@@ -48,7 +48,9 @@ $(document).ready(function () {
         const access_tokens = [
             'fedf3ab292e335902777f9edfba4da45d4228258',
             '25e865e3168113cc1481e5c06ac32a0878da4aba',
-            'ca7d6d4a4a6d7f044f75041f436e7a0429b3df06'];
+            'ca7d6d4a4a6d7f044f75041f436e7a0429b3df06',
+            '189bc857b6b99cf01f14c09a526df6f3b90bd108',
+            '27df7255e9ca5f24c75b5780cdc6c2e3f1a6581f'];
 
         return access_tokens[random_int(0, access_tokens.length)];
     };
