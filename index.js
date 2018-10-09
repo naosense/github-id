@@ -35,7 +35,10 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
-                callback({}, xhr)
+                callback({}, xhr);
+                if (xhr.status === 403) {
+                    alert('Please wait for a while, printer is too hot')
+                }
             }
         });
     };
@@ -46,9 +49,11 @@ $(document).ready(function () {
 
     let select_token = function () {
         const access_tokens = [
-            '8747a2dd1bf69c6da5365649074508542b0556a0',
-            'f5803cc38aa1a08f223f6ce5f6c3d8e56270ac41',
-            '09625594355db9babb86b6be76f0b217d85408ce'];
+            '4c61c7e58785bb8b2789224381b2e1331083ffa7',
+            'a95aaa5a06cf5aa871ccc2f670371cfcb556cbd8',
+            '46dcf5dead1cb95385eab0ebab674e3dd3601dcc',
+            '6226fb196321a8a1b685b735e7208b909e12ef48',
+            '76183e52d0b0b1e9265088be5197df9f1a14454e'];
 
         return access_tokens[random_int(0, access_tokens.length)];
     };
