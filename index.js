@@ -325,6 +325,12 @@ $(document).ready(function () {
                             return r[0].indexOf(user_id + '.github.io') === -1;
                         });
 
+                        if (repos_no_io.length === 0) {
+                            progress_bar.css('width', '100%');
+                            progress_bar.css('background-color', '#fff');
+                            return;
+                        }
+
                         let language = {};
                         let load_repo_count = 0;
                         for (let i = 0; i < repos_no_io.length; i++) {
