@@ -157,38 +157,54 @@ $(document).ready(function () {
         myChart.setOption(option);
     };
 
-    let display_language = function (q, data) {
+    let display_language = function (q, name, data) {
         let myChart = echarts.init(document.getElementById('language'));
+
         let option = {
-            tooltip: {
-                trigger: 'item',
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'right',
-                itemGap:2,
-                itemWidth: 15,
-                itemHeight: 10,
-                y: 'center',
-                textStyle: {
+            tooltip: {},
+            angleAxis: {
+                min: 0,
+                max: 1,
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
                     fontSize: 10,
-                    color: '#aaa'
+                    margin: 5,
+                    formatter: function (value, index) {
+                        if (index % 2 !== 0) {
+                            return value * 100 + '%';
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
+                    }
                 }
             },
-            color: ['#e34c26', '#b07219', '#563d7c', '#29a745', '#f1e05a', '#005cc5'],
-            series: [
-                {
-                    name: 'Language Percent',
-                    type: 'pie',
-                    radius: ['27%', '40%'],
-                    label: {
-                        normal: {
-                            show: false,
-                        }
-                    },
-                    data: data
+            radiusAxis: {
+                type: 'category',
+                data: name,
+                z: 10,
+                axisLabel: {
+                    fontSize: 10,
+                    interval: 0
                 }
-            ]
+            },
+            polar: {
+                radius: '55%'
+            },
+            series: [{
+                type: 'bar',
+                data: data,
+                coordinateSystem: 'polar',
+                name: 'Language Percent',
+                color: 'rgba(40,167,69,1.0)'
+            }]
         };
 
         myChart.setOption(option);
@@ -225,6 +241,11 @@ $(document).ready(function () {
                         } else {
                             return '';
                         }
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
                     }
                 }
             },
@@ -337,13 +358,15 @@ $(document).ready(function () {
                                         return l2[1] - l1[1];
                                     });
 
-                                    let lang_percent = [];
-                                    language_array.slice(0, 6).forEach(function (l) {
-                                        lang_percent.push({'name':l[0].length > 10 ? l[0].substring(0, 7) + '...':l[0], 'value':l[1]})
+                                    let lang_name = [];
+                                    let lang_data = [];
+                                    language_array.slice(0, 5).forEach(function (l) {
+                                        lang_name.push(l[0]);
+                                        lang_data.push(l[1]);
                                     });
 
-                                    if (lang_percent.length > 0) {
-                                        display_language('', lang_percent);
+                                    if (lang_name.length > 0) {
+                                        display_language('', lang_name.reverse(), lang_data.reverse());
                                     }
 
                                     progress_bar.css('background-color', '#fff');
