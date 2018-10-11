@@ -173,7 +173,7 @@ $(document).ready(function () {
                     fontSize: 10,
                     margin: 5,
                     formatter: function (value, index) {
-                        if (index === 1 || index === 6) {
+                        if (index === 1) {
                             return value * 100 + '%';
                         } else {
                             return '';
