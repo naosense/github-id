@@ -37,6 +37,7 @@ $(document).ready(function () {
     let invoke_github_api = function (url, callback) {
         $.ajax({
             headers: {
+                Authorization: 'token ' + select_token(),
                 Accept: 'application/vnd.github.v3.star+json; charset=utf-8'
             },
             url: url,
@@ -58,6 +59,7 @@ $(document).ready(function () {
                     } else {
                         $.ajax({
                             headers: {
+                                Authorization: 'token ' + select_token(),
                                 Accept: 'application/vnd.github.v3.star+json; charset=utf-8'
                             },
                             url: 'https://api.github.com/rate_limit?access_token=' + access_token,
@@ -276,7 +278,7 @@ $(document).ready(function () {
     };
 
     let render_chart = function (user_id) {
-        let user_url = 'https://api.github.com/users/' + user_id + '?access_token=' + select_token();
+        let user_url = 'https://api.github.com/users/' + user_id;
         invoke_github_api(user_url, function (user_data) {
             let email = format_email(user_id, user_data['email']);
             let email_html = is_empty(email) ? '' : '<span style="font-size: 12px; color: #999; letter-spacing: 0.01em">&nbsp;' + email + '</span>';
@@ -299,7 +301,7 @@ $(document).ready(function () {
             let repos = [];
             for (let page = 1; page <= page_count; page++) {
                 let repo_url = 'https://api.github.com/users/' + user_id + '/repos?sort=created&direction=asc&per_page='
-                    + page_size + '&page=' + page + '&access_token=' + select_token();
+                    + page_size + '&page=' + page;
 
                 invoke_github_api(repo_url, function (repo_data) {
                     repos = repos.concat(repo_data.map(function (e) {
@@ -333,8 +335,7 @@ $(document).ready(function () {
                         for (let i = 0; i < repos_no_io.length; i++) {
                             let r = repos_no_io[i];
 
-                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[0] + '/languages'
-                                + '?access_token=' + select_token();
+                            let language_url = 'https://api.github.com/repos/' + user_id + '/' + r[0] + '/languages';
                             invoke_github_api(language_url, function (language_data, xhr) {
                                 if (xhr.status === 200) {
                                     let total_codes = 0;
