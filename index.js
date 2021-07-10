@@ -82,14 +82,11 @@ $(document).ready(function () {
     };
 
     let select_token = function () {
-        const access_tokens = [
-            '4c61c7e58785bb8b2789224381b2e1331083ffa7',
-            'a95aaa5a06cf5aa871ccc2f670371cfcb556cbd8',
-            '46dcf5dead1cb95385eab0ebab674e3dd3601dcc',
-            '6226fb196321a8a1b685b735e7208b909e12ef48',
-            '76183e52d0b0b1e9265088be5197df9f1a14454e'];
-
-        return access_tokens[random_int(0, access_tokens.length)];
+        if (is_empty(query['token'])) {
+            alert("Please specify a token in url like this: https://pingao777.github.io/github-id/?q={your-github-id}&token=your-own-token");
+            return '';
+        }
+        return query['token'];
     };
 
     let format_email = function (user_id, email) {
@@ -388,6 +385,9 @@ $(document).ready(function () {
 
     let query = parse_query(window.location.search);
     let q = is_empty(query['q']) ? 'pingao777' : query['q'];
+    if (is_empty(select_token())) {
+        return;
+    }
 
     render_chart(q);
 
