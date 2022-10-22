@@ -8,6 +8,6 @@ E.g. for the famous r programmer [hadley](https://naosense.github.io/github-id/?
 
 For [me](https://naosense.github.io/github-id/?q=naosense),
 
-![naosense](http://wocanmei-hexo.nos-eastchina1.126.net/github-id/github-id_naosense.png)
+![naosense](http://wocanmei-hexo.nos-eastchina1.126.net/github-id/github-id_pingao777.png)
 
 *Talk is cheap, show me your github!*
